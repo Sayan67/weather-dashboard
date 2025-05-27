@@ -157,13 +157,20 @@ const WeatherDashboard = ({
 
 const CardWrapper = styled.div`
   width: 100%;
-  margin-top: 8rem;
+  height: 100%;
+  padding-top: 8rem;
+  padding-left:1rem;
+  padding-bottom: 2rem;
+  max-width: 100vw;
+  padding-right: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   margin-bottom: 2rem;
+  overflow-y: auto;
+
 `;
 
 export const AppWrapper = styled.div`
@@ -180,10 +187,13 @@ export const AppWrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 90%;
+  @media screen and (min-width: 860px) {
+    width: 100%;
+  }
+  width: 85%;
   min-height: 60vh;
   max-width: 800px;
-  padding: 2rem;
+  padding: 1rem;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 20px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
