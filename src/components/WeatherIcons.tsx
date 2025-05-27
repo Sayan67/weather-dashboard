@@ -11,7 +11,7 @@ import {
 } from "react-icons/fi";
 import { BsFillCloudSunFill } from "react-icons/bs";
 import { LuHaze } from "react-icons/lu";
-import { RiMistFill } from "react-icons/ri";
+import { RiMistFill, RiMoonCloudyFill } from "react-icons/ri";
 import { GiFog } from "react-icons/gi";
 import { MdStorm } from "react-icons/md";
 import type { IconType } from "react-icons";
@@ -34,23 +34,35 @@ const iconMap: { [key: string]: IconType } = {
   Tornado: FiWind,
 };
 
-const nightIconMap: { [key: string]: JSX.Element } = {
-  Clear: <FiMoon />,
-  Clouds: <BsFillCloudSunFill />,
-  // fallback to same icons for others
+const nightIconMap: { [key: string]: IconType } = {
+  Clear: FiMoon,
+  Clouds: RiMoonCloudyFill,
+  Rain: FiCloudRain,
+  Drizzle: FiCloudDrizzle,
+  Thunderstorm: FiZap,
+  Snow: FiCloudSnow,
+  Mist: RiMistFill,
+  Smoke: FiWind,
+  Haze: LuHaze,
+  Dust: FiWind,
+  Fog: GiFog,
+  Sand: MdStorm,
+  Ash: FiWind,
+  Squall: FiWind,
+  Tornado: FiWind,
 };
 
 export const WeatherIcon = ({
-  main,
   icon,
-  size= 24
+  size = 24,
 }: {
-  main: string;
   icon: string;
   size?: number;
 }) => {
-  const isNight = icon?.includes("n");
-  if (isNight && nightIconMap[main]) return <>{nightIconMap[main]}</>;
-  const IconComponent = iconMap[main] || FiSun;
-  return <><IconComponent size={size}/></>;
+
+  return (
+    <>
+      <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} alt="" style={{width:"100px",height:"100px"}}/>
+    </>
+  );
 };

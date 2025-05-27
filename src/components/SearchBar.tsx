@@ -4,7 +4,10 @@ import styled from "styled-components";
 const Form = styled.form`
   display: flex;
   gap: 0.5rem;
-
+  @media screen and (min-width: 768px) {
+    width: fit-content;
+  }
+  width: 100%;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border-radius: 12px;
@@ -17,7 +20,10 @@ const Input = styled.input`
   padding: 0.75rem 1rem;
   border-radius: 8px;
   border: none;
-  width: 200px;
+  @media screen and (min-width: 768px) {
+    width: 400px;
+  }
+  width: 100%;
   font-size: 1rem;
   background: rgba(255, 255, 255, 0.1);
   color: black;
@@ -33,7 +39,7 @@ const Input = styled.input`
   }
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   background: rgba(0, 119, 255, 0.6);
   color: white;
   border: none;
@@ -76,10 +82,10 @@ const Button = styled.button`
 
 interface Props {
   onSearch: (city: string) => void;
-  value:string
+  value: string;
 }
 
-const SearchBar = ({ onSearch,value }: Props) => {
+const SearchBar = ({ onSearch, value }: Props) => {
   const [input, setInput] = useState(value || "");
 
   const handleSubmit = (e: React.FormEvent) => {
