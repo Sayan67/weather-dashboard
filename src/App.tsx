@@ -1,13 +1,26 @@
+import { useState, useEffect } from "react";
+import WeatherCard from "./components/WeatherCard";
 
-import './App.css'
+
+
 
 function App() {
+  const [city, setCity] = useState(
+    () => localStorage.getItem("city") || "London"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("city", city);
+  }, [city]);
 
   return (
-    <main>
-      Test
-    </main>
-  )
+    <div>
+      {/* <BackgroundImage>
+        <img src={imageUrl} />
+      </BackgroundImage> */}
+      <WeatherCard city={city} setCity={setCity} />
+    </div>
+  );
 }
 
-export default App
+export default App;
