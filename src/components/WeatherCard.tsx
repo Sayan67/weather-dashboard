@@ -72,7 +72,7 @@ const WeatherDashboard = ({
     );
 
   return (
-    <AppWrapper>
+    <CardWrapper>
       <SearchBar onSearch={setCity} value={city} />
       <UnitToggleWrapper>
         <UnitLabel>°C</UnitLabel>
@@ -99,7 +99,8 @@ const WeatherDashboard = ({
         </TopInfo>
         <WeatherMain>
           <SubText>
-            {current.weather?.[0]?.main ?? ""} \{" "}
+            {current.weather?.[0]?.main ?? ""}{" "}
+            {current.weather?.[1]?.main && " "}
             {current.weather?.[1]?.main ?? ""}
           </SubText>
           <Temperature>
@@ -110,15 +111,13 @@ const WeatherDashboard = ({
               weekday: "long",
               day: "numeric",
             })}{" "}
-            — {current.wind.speed}mph / Feels like :{" "}
-            {Math.round(current.main?.feels_like)}°
+            — Wind : {current.wind.speed}mph
+          </SubText>
+          <SubText>
+            Feels like : {Math.round(current.main?.feels_like)}°
           </SubText>
 
-          <WeatherIcon
-            main={current.weather?.[1]?.main ?? ""}
-            icon={current.weather?.[0].icon}
-            size={80}
-          />
+          <WeatherIcon icon={current.weather?.[0].icon} size={80} />
         </WeatherMain>
         <TopInfo>Forecast :</TopInfo>
         <ForecastRow>
@@ -146,32 +145,36 @@ const WeatherDashboard = ({
                     weekday: "short",
                   })}
                 </div>
-                <WeatherIcon
-                  main={current.weather?.[1]?.main}
-                  icon={current.weather?.[0].icon}
-                  size={30}
-                />
+                <WeatherIcon icon={current.weather?.[0].icon} size={30} />
                 <div>{Math.round(f.main?.temp)}°</div>
               </ForecastCard>
             ))}
         </ForecastRow>
       </Container>
-    </AppWrapper>
+    </CardWrapper>
   );
 };
 
-const AppWrapper = styled.div`
+const CardWrapper = styled.div`
+  width: 100%;
+  margin-top: 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+`;
+
+export const AppWrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-top: 2rem;
-  padding: 1.5rem;
   gap: 1rem;
   justify-content: center;
   align-items: center;
   background: linear-gradient(to top, #8dc26f, #76b2fe);
   color: black;
-  font-family: "Helvetica Neue", sans-serif;
   overflow-y: auto;
   overflow-x: hidden;
 `;
@@ -207,7 +210,7 @@ const Temperature = styled.h1`
 `;
 
 const SubText = styled.p`
-  font-size: 1rem;
+  font-size: 1.4rem;
   opacity: 0.8;
 `;
 
@@ -229,6 +232,10 @@ const ForecastCard = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   align-items: center;
+  @media screen and (max-width: 470px) {
+    max-width: 100%;
+  }
+  max-width: 160px;
   min-width: 120px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;

@@ -10,7 +10,7 @@ class HttpError extends Error {
     this.status = status;
   }
 }
-// Improved fetcher that properly throws errors
+
 const fetcher = async (url: string) => {
   const response = await fetch(url);
 
@@ -38,10 +38,9 @@ export const useWeather = (city: string, unit: "metric" | "imperial") => {
     {
       refreshInterval: 30000,
       onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-        // Only retry up to 3 times
+        // retry up to 3 times
         if (retryCount >= 3) return;
 
-        // Don't retry for 404 errors or rate limiting
         if (error.status === 404 || error.status === 429) return;
 
         // Retry after 5 seconds
