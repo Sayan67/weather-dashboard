@@ -7,7 +7,7 @@ const Form = styled.form`
   @media screen and (min-width: 768px) {
     width: fit-content;
   }
-  width: 100%;
+  width: 90%;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border-radius: 12px;
