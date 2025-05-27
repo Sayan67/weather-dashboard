@@ -32,7 +32,7 @@ const WeatherDashboard = ({
 
   if (isLoading || isError)
     return (
-      <AppWrapper>
+      <CardWrapper>
         <SearchBar onSearch={setCity} value={city} />
         <UnitToggleWrapper>
           <UnitLabel>°C</UnitLabel>
@@ -68,7 +68,7 @@ const WeatherDashboard = ({
             ))}
           </ForecastRow>
         </Container>
-      </AppWrapper>
+      </CardWrapper>
     );
 
   return (
@@ -159,7 +159,7 @@ const CardWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding-top: 8rem;
-  padding-left:1rem;
+  padding-left: 1rem;
   padding-bottom: 2rem;
   max-width: 100vw;
   padding-right: 1rem;
@@ -170,7 +170,6 @@ const CardWrapper = styled.div`
   gap: 1rem;
   margin-bottom: 2rem;
   overflow-y: auto;
-
 `;
 
 export const AppWrapper = styled.div`
