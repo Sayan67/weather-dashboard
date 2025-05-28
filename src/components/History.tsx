@@ -30,10 +30,7 @@ function History() {
 
   return (
     <>
-      <h2
-      >
-        Weather History
-      </h2>
+      <h2>Weather History</h2>
       <Wrapper>
         {history.length > 0 ? (
           <ul
@@ -67,6 +64,7 @@ function History() {
 
 const Wrapper = styled.div`
   max-height: 70vh;
+  padding: 0px 1rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -84,7 +82,10 @@ const HistoryWrapper = styled.div`
   justify-content: start;
   margin-top: 10px;
   width: 100%;
-  max-width: 800px;
+  @media screen and (min-width: 600px) {
+    max-width: 800px;
+  }
+  max-width: 350px;
   padding: 20px 40px;
   background-color: #f9f9f9a7;
   border-radius: 8px;
