@@ -10,7 +10,7 @@ A modern and elegant weather application built with React, TypeScript, and Supab
 - **User Authentication**: Create an account to unlock additional features
 - **Search History**: Save and view your previous weather searches
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Modern UI**: Beautiful glassmorphic design with elegant animations
+- **Modern UI**: Beautiful glassmorphic design
 
 ## 🛠️ Technologies Used
 
