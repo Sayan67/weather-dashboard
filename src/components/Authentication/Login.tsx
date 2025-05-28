@@ -115,11 +115,11 @@ const Input = styled.input`
   border-radius: 0.25rem;
   margin-bottom: 1rem;
   background: rgba(255, 255, 255, 0.1);
-  color: white;
+  color: black;
   box-sizing: border-box;
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(0, 0, 0, 0.6);
   }
 `;
 
