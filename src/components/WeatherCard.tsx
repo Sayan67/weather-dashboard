@@ -6,6 +6,7 @@ import { useWeatherContext } from "../context/WeatherProvider";
 import { useWeather } from "../hooks/useWeather";
 import toast from "react-hot-toast";
 import { WeatherIcon } from "./WeatherIcons";
+import { useAuth } from "./Providers/AuthProvider";
 
 const WeatherDashboard = ({
   city,
@@ -15,9 +16,11 @@ const WeatherDashboard = ({
   setCity: Dispatch<SetStateAction<string>>;
 }) => {
   const { toggleUnit, unit } = useWeatherContext();
+  const { user } = useAuth();
   const { current, forecast, isLoading, isError, error } = useWeather(
     city,
-    unit
+    unit,
+    user ? true : false
   );
 
   useEffect(() => {
@@ -74,6 +77,7 @@ const WeatherDashboard = ({
   return (
     <CardWrapper>
       <SearchBar onSearch={setCity} value={city} />
+      {!user && <h4>Login to save the search data</h4>}
       <UnitToggleWrapper>
         <UnitLabel>°C</UnitLabel>
         <UnitToggle>
@@ -116,6 +120,7 @@ const WeatherDashboard = ({
           <SubText>
             Feels like : {Math.round(current.main?.feels_like)}°
           </SubText>
+          <SubText>Humidity : {Math.round(current.main.humidity)}%</SubText>
 
           <WeatherIcon icon={current.weather?.[0].icon} size={80} />
         </WeatherMain>
@@ -145,7 +150,7 @@ const WeatherDashboard = ({
                     weekday: "short",
                   })}
                 </div>
-                <WeatherIcon icon={current.weather?.[0].icon} size={30} />
+                <WeatherIcon icon={current.weather?.[0]?.icon} size={30} />
                 <div>{Math.round(f.main?.temp)}°</div>
               </ForecastCard>
             ))}
@@ -155,7 +160,7 @@ const WeatherDashboard = ({
   );
 };
 
-const CardWrapper = styled.div`
+export const CardWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding-top: 8rem;
@@ -192,7 +197,7 @@ const Container = styled.div`
   width: 85%;
   min-height: 60vh;
   max-width: 800px;
-  padding: 1rem;
+  padding: 1rem 2rem;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 20px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);

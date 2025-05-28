@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
+import { saveWeatherData } from "../services/storeHistory";
+import { useAuth } from "./Providers/AuthProvider";
 const Form = styled.form`
   display: flex;
   gap: 0.5rem;
@@ -87,8 +88,8 @@ interface Props {
 
 const SearchBar = ({ onSearch, value }: Props) => {
   const [input, setInput] = useState(value || "");
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const { user } = useAuth();
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
       onSearch(input.trim());

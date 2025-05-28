@@ -5,12 +5,13 @@ import "./App.css";
 import { WeatherProvider } from "./context/WeatherProvider.tsx";
 import { Toaster } from "react-hot-toast";
 import Header from "./components/layout/Header.tsx";
+import { AuthProvider } from "./components/Providers/AuthProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <WeatherProvider>
-      <App />
-      <Toaster />
-    </WeatherProvider>
+      <WeatherProvider>
+        <App />
+        <Toaster />
+      </WeatherProvider>
   </StrictMode>
 );

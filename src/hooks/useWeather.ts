@@ -1,4 +1,7 @@
 import useSWR from "swr";
+import { useAuth } from "../components/Providers/AuthProvider";
+import { saveWeatherData } from "../services/storeHistory";
+import toast from "react-hot-toast";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHERMAP_API_KEY || "";
 class HttpError extends Error {
@@ -12,6 +15,8 @@ class HttpError extends Error {
 }
 
 const fetcher = async (url: string) => {
+  console.log("Fetching data from:", url);
+
   const response = await fetch(url);
 
   // If the response is not ok, throw an error
@@ -28,7 +33,12 @@ const fetcher = async (url: string) => {
   return response.json();
 };
 
-export const useWeather = (city: string, unit: "metric" | "imperial") => {
+export const useWeather = (
+  city: string,
+  unit: "metric" | "imperial",
+  saveHistory: boolean
+) => {
+  const { user } = useAuth();
   const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${unit}&appid=${API_KEY}`;
   const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${unit}&cnt=40&appid=${API_KEY}`;
 
@@ -49,6 +59,21 @@ export const useWeather = (city: string, unit: "metric" | "imperial") => {
     }
   );
 
+  if (current && saveHistory && user) {
+    async function fetchFunction() {
+      const res = await saveWeatherData({
+        city: current.name,
+        humidity: current.main.humidity.toString(),
+        temperature: current.main.temp.toString(),
+        icon: current.weather[0].icon,
+      });
+    }
+    fetchFunction().catch((error) => {
+      console.error("Error saving weather data:", error);
+      toast.error("Failed to save weather data. Please try again.");
+    });
+  }
+
   const { data: forecast, error: forecastError } = useSWR(
     city ? forecastUrl : null,
     fetcher,
@@ -61,7 +86,8 @@ export const useWeather = (city: string, unit: "metric" | "imperial") => {
       },
     }
   );
-  
+  console.log("Current Weather Data:", current);
+  console.log("Forecast Data:", forecast);
 
   return {
     current,
