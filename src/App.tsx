@@ -3,6 +3,10 @@ import WeatherCard, { AppWrapper } from "./components/WeatherCard";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Auth from "./components/Authentication/Auth";
 import Header from "./components/layout/Header";
+import { AuthProvider } from "./components/Providers/AuthProvider";
+import History from "./components/History";
+import { ProtectedRoute } from "./components/Authentication/ProtectedRoute";
+import { PublicRoute } from "./components/Authentication/PublicRoute";
 
 function App() {
   const [city, setCity] = useState(
@@ -15,19 +19,28 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <BackgroundImage>
-        <img src={imageUrl} />
-        </BackgroundImage> */}
-      <Header />
-      <AppWrapper>
-        <Routes>
-          <Route
-            path="/"
-            element={<WeatherCard city={city} setCity={setCity} />}
-          />
-          <Route path="/auth" element={<Auth />} />
-        </Routes>
-      </AppWrapper>
+      <AuthProvider>
+        <Header />
+        <AppWrapper>
+          <Routes>
+            <Route
+              path="/auth"
+              element={
+                <PublicRoute>
+                  <Auth />
+                </PublicRoute>
+              }
+            />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/history" element={<History />}></Route>
+            </Route>
+            <Route
+              path="/"
+              element={<WeatherCard city={city} setCity={setCity} />}
+            />
+          </Routes>
+        </AppWrapper>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
