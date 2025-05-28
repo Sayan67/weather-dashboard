@@ -17,7 +17,7 @@ type AuthContextType = {
   registerWithEmailPassword: (
     email: string,
     password: string,
-    name: string,
+    name: string
   ) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   authPageState: AuthPageState;
@@ -129,7 +129,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           id: data.user.id,
           name: name,
           email: email,
-          avatar_url: avatar_url
+          avatar_url: avatar_url,
         });
         console.log("Signup response:", data);
 
@@ -151,6 +151,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await supabase.auth.signOut();
     router("/auth");
   };
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          background: "rgba(0,0,0,0.1)",
+        }}
+      >
+        <div>Loading authentication...</div>
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider
