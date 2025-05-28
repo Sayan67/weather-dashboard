@@ -23,6 +23,10 @@ function App() {
         <Header />
         <AppWrapper>
           <Routes>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/history" element={<History />}></Route>
+            </Route>
+            
             <Route
               path="/auth"
               element={
@@ -31,9 +35,6 @@ function App() {
                 </PublicRoute>
               }
             />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/history" element={<History />}></Route>
-            </Route>
             <Route
               path="/"
               element={<WeatherCard city={city} setCity={setCity} />}
